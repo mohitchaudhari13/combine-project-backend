@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: com-backend-app
+  labels:
+    app: com-backend-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: com-backend-app
+  template:
+    metadata:
+      labels:
+        app: com-backend-app
+    spec:
+      containers:
+      - name: com-backend-app   
+        image: mohit1308/com-backend:latest
+        ports:
+        - containerPort: 8080 #Application port
+      
