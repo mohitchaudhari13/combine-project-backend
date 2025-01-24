@@ -1,0 +1,26 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Pull Code') {
+            steps {
+                echo 'Pulling code from Git repository...'
+                git branch: 'dev', url: 'https://github.com/mohitchaudhari13/combine-project-backend.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''
+                docker build . -t mohit1308/com-backend:latest
+                docker push mohit1308/com-backend:latest
+                docker rmi mohit1308/com-backend:latest
+                kubectl apply -f ./yaml/
+                '''
+            }
+        }
+    }   
+}
